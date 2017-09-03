@@ -1,9 +1,12 @@
 import numpy as np
 import time 
 
+import random_stats as random
+from entities.object import * 
+
 from datetime import datetime
 
-class Person:
+class Person(Object):
 
 	health = 100
 	humor = 100 
@@ -20,7 +23,10 @@ class Person:
 						  "I'm feedling alone"]
 
 	
-	def __init__(self):
+	def __init__(self, canvas, xpos=0, ypos=0):
+		(self.xpos, self.ypos) = random.position()
+		Object.__init__(self, canvas=canvas, xpos=self.xpos, ypos=self.ypos, char='P')
+		print('Creating Person at position {} x and {} y'.format(self.xpos, self.ypos))
 		self.updateNeeds()
 			
 	
@@ -28,6 +34,8 @@ class Person:
 		self.needs = np.array([self.health, self.humor, 
 							   self.hungry, self.cold,
 							   self.loneliness])
+		self.walk()
+		self.draw(COLOUR_GREEN)
 
 	def stateFeelings(self):
 		self.updateNeeds()
@@ -54,11 +62,18 @@ class Person:
 		self.hungry = self.hungry - 1
 
 	def live(self):
-		time.sleep(0.1)
+		time.sleep(0.5)
 		if(self.isAlive()):
 			self.stateFeelings()
-			self.loseHealth()
-			self.increaseHunger()
+			#self.loseHealth()
+			#self.increaseHunger()
 		else:
 			print("I died at {}".format(self.time_of_death))
+
+	def walk(self):
+		(dx, dy) = random.random_step()
+		self.last_xpos = self.xpos
+		self.last_ypos = self.ypos
+		self.xpos += dx
+		self.ypos += dy
 
