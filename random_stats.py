@@ -6,7 +6,7 @@ def position():
 
 	initial_height = HEADER_HEIGHT + 1
 
-	xpos = np.random.randint(MAX_MAPBOX)
+	xpos = np.random.randint(MAX_MAPBOX*2)
 	ypos = initial_height + np.random.randint(MAX_MAPBOX)
 
 	return (xpos, ypos)
@@ -29,7 +29,7 @@ def random_step():
 		dy += 1
 	else:
 		dy -= 1
-		
+
 	return (dx, dy)
 
 

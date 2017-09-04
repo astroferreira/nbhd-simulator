@@ -19,7 +19,7 @@ class Canvas:
 		self.screen.refresh()
 
 	def header(self):
-		self.screen.print_at(HEADER_MAIN_MESSAGE.format(VERSION), 0, 0)
+		self.screen.print_at(HEADER_MAIN_MESSAGE.format(VERSION), 1, 1)
 		self.screen.move(0, HEADER_HEIGHT)
 		self.screen.draw(self.width, HEADER_HEIGHT)
 		self.screen.refresh()

@@ -8,6 +8,8 @@ from datetime import datetime
 
 class Person(Object):
 
+	char = 'P'
+
 	health = 100
 	humor = 100 
 	hungry = 100 
@@ -25,7 +27,7 @@ class Person(Object):
 	
 	def __init__(self, canvas, xpos=0, ypos=0):
 		(self.xpos, self.ypos) = random.position()
-		Object.__init__(self, canvas=canvas, xpos=self.xpos, ypos=self.ypos, char='P')
+		Object.__init__(self, canvas=canvas, xpos=self.xpos, ypos=self.ypos)
 		print('Creating Person at position {} x and {} y'.format(self.xpos, self.ypos))
 		self.updateNeeds()
 			
@@ -42,10 +44,11 @@ class Person(Object):
 		minimal = min(self.needs)
 		if(minimal < 50):
 			index = np.where(self.needs == min(self.needs))[0]
-			for i in index:
-				print(self.critical_messages[i])
-		else:
-			print("I'm fine.")
+			#for i in index:
+
+				#print(self.critical_messages[i])
+		#else:
+			#print("I'm fine.")
 
 	def isAlive(self):
 		if(self.health == 0):
@@ -62,18 +65,22 @@ class Person(Object):
 		self.hungry = self.hungry - 1
 
 	def live(self):
-		time.sleep(0.5)
+		time.sleep(1/GAME_SPEED)
 		if(self.isAlive()):
 			self.stateFeelings()
 			#self.loseHealth()
-			#self.increaseHunger()
-		else:
-			print("I died at {}".format(self.time_of_death))
+			self.increaseHunger()
+		#else:
+			#print("I died at {}".format(self.time_of_death))
 
 	def walk(self):
 		(dx, dy) = random.random_step()
-		self.last_xpos = self.xpos
-		self.last_ypos = self.ypos
-		self.xpos += dx
-		self.ypos += dy
+
+		if Object.get_at(self.xpos+dx, self.ypos+dy):
+			print('Ops! Colision.')
+		else:
+			self.last_xpos = self.xpos
+			self.last_ypos = self.ypos
+			self.xpos += dx
+			self.ypos += dy
 
