@@ -1,14 +1,15 @@
 import numpy as np
 import time 
 
-import random_stats as random
+from stats import random
 from entities.object import * 
+from core import movement as mov
 
 from datetime import datetime
 
 class Person(Object):
 
-	char = 'P'
+	filename = 'person.png'
 
 	health = 100
 	humor = 100 
@@ -25,19 +26,25 @@ class Person(Object):
 						  "I'm feedling alone"]
 
 	
-	def __init__(self, canvas, xpos=0, ypos=0):
-		(self.xpos, self.ypos) = random.position()
-		Object.__init__(self, canvas=canvas, xpos=self.xpos, ypos=self.ypos)
-		print('Creating Person at position {} x and {} y'.format(self.xpos, self.ypos))
+	def __init__(self, screen=None):
+		Object.__init__(self, screen=screen, filename=self.filename)
 		self.updateNeeds()
-			
+	
+	def walk(self):
+
+		speed = np.random.randint(10)
+
+		(dx, dy) = random.step()	
+		angle = mov.angle_orientation(dx, dy)
+
+
+		self.move(dx*40, dy*40, angle)
 	
 	def updateNeeds(self):
 		self.needs = np.array([self.health, self.humor, 
 							   self.hungry, self.cold,
 							   self.loneliness])
 		self.walk()
-		self.draw(COLOUR_GREEN)
 
 	def stateFeelings(self):
 		self.updateNeeds()
@@ -73,14 +80,5 @@ class Person(Object):
 		#else:
 			#print("I died at {}".format(self.time_of_death))
 
-	def walk(self):
-		(dx, dy) = random.random_step()
-
-		if Object.get_at(self.xpos+dx, self.ypos+dy):
-			print('Ops! Colision.')
-		else:
-			self.last_xpos = self.xpos
-			self.last_ypos = self.ypos
-			self.xpos += dx
-			self.ypos += dy
+	
 
