@@ -4,6 +4,7 @@ import time
 from stats import random
 from entities.object import * 
 from core import movement as mov
+from core.tilemap import TileMap
 
 from datetime import datetime
 
@@ -26,19 +27,22 @@ class Person(Object):
 						  "I'm feedling alone"]
 
 	
-	def __init__(self, screen=None):
-		Object.__init__(self, screen=screen, filename=self.filename)
+	def __init__(self, position=None, screen=None, animated=False):
+		print(position)
+		Object.__init__(self, screen=screen, position=position, filename=self.filename, animated=animated)
 		self.updateNeeds()
 	
 	def walk(self):
 
-		speed = np.random.randint(10)
-
 		(dx, dy) = random.step()	
 		angle = mov.angle_orientation(dx, dy)
 
-
-		self.move(dx*40, dy*40, angle)
+		obj = TileMap.get_at(self.position.x+dx*TILE_SIZE, self.position.y+dy*TILE_SIZE)
+		
+		if obj.filename != 'wall.png':
+			self.move(dx, dy, angle)
+		else:
+			print("Ops! Colision")
 	
 	def updateNeeds(self):
 		self.needs = np.array([self.health, self.humor, 
@@ -76,7 +80,7 @@ class Person(Object):
 		if(self.isAlive()):
 			self.stateFeelings()
 			#self.loseHealth()
-			self.increaseHunger()
+			#self.increaseHunger()
 		#else:
 			#print("I died at {}".format(self.time_of_death))
 

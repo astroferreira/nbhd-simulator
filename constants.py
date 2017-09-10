@@ -17,7 +17,7 @@ GAME_SPEED = 10
 #\____/_/ |_/_/  |_/_/   /_/ /_/___/\____//____/
 #
 
-SCREEN_RESOLUTION = (1920, 1080)
+SCREEN_RESOLUTION = (50*32, 30*32)
 
 
 ALPHA = pygame.Color(0, 0, 0)
@@ -41,3 +41,17 @@ COLOUR_WHITE = 7
 #
 
 HEADER_MAIN_MESSAGE = 'NBHD - Simulator | Version {}.'
+
+#     __  ______    ____  ____  _____   ________
+#    /  |/  /   |  / __ \/ __ \/  _/ | / / ____/
+#   / /|_/ / /| | / /_/ / /_/ // //  |/ / / __
+#  / /  / / ___ |/ ____/ ____// // /|  / /_/ /
+# /_/  /_/_/  |_/_/   /_/   /___/_/ |_/\____/
+#
+
+TILE_SIZE = 32
+
+WALL_TILE = 0
+GROUND_TILE = 1
+
+TILE_LIST = ['wall.png', 'ground.png']

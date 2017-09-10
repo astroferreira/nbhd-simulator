@@ -9,7 +9,7 @@ class Screen:
 
 		pygame.init()
 
-		self.surface = pygame.display.set_mode(SCREEN_RESOLUTION, pygame.FULLSCREEN)
+		self.surface = pygame.display.set_mode(SCREEN_RESOLUTION)
 	
 
 	def clear(self):

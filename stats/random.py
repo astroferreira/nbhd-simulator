@@ -1,7 +1,23 @@
+import noise
+import numpy as np
+
 from constants import *
 from entities.object import Position
 
-import numpy as np
+
+
+def perlin(x=60, y=60):
+ 
+   octaves = 1
+   f = 5*np.random.rand(1) * octaves
+   
+   noise2D = np.array([noise.pnoise2(i/f, j/f, octaves) for j in range(y) for i in range(x)]).reshape((x, y))
+
+   noise2D[noise2D > 0] = 1
+   noise2D[noise2D <= 0] = 0
+
+   return noise2D[0:50, 0:30].astype(int)
+
 
 
 def position():

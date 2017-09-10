@@ -1,4 +1,6 @@
 import numpy as np
+from constants import *
+from entities.object import Position
 
 def angle_orientation(dx, dy):
 
@@ -19,4 +21,11 @@ def unit_vector(vector):
 	return vector/np.linalg.norm(vector)
 
 
+def possible_position(tilemap):
+
+	grounds = np.where(tilemap == GROUND_TILE)
+
+	position = np.random.randint(grounds[0].size+1)
+
+	return Position((grounds[0][position]*TILE_SIZE, grounds[1][position]*TILE_SIZE), 0)
 
